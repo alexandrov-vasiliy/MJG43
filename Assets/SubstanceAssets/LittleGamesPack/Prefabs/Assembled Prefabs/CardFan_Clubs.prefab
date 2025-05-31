@@ -23,9 +23,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6015534738080319574}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4285000894260529900}
   - {fileID: 4285000894854074442}
@@ -41,13 +43,13 @@ Transform:
   - {fileID: 4285000894546950919}
   - {fileID: 4285000894544937873}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &169612382072243703
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 3631630423275414307, guid: 18c6a9a978394df4596d3f6ec9c6f6fb, type: 3}
@@ -99,6 +101,9 @@ PrefabInstance:
       value: -52.741
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18c6a9a978394df4596d3f6ec9c6f6fb, type: 3}
 --- !u!4 &4285000895164972142 stripped
 Transform:
@@ -110,6 +115,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 3935840920983308708, guid: 6355a5e4b343a0f4f88854099a35e7da, type: 3}
@@ -161,6 +167,9 @@ PrefabInstance:
       value: -85.08
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6355a5e4b343a0f4f88854099a35e7da, type: 3}
 --- !u!4 &4285000893385295409 stripped
 Transform:
@@ -172,6 +181,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 3623688273064332915, guid: 3c7827269bdf2ba4b9c1f07269a3617d, type: 3}
@@ -223,6 +233,9 @@ PrefabInstance:
       value: Card_ClubAce
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c7827269bdf2ba4b9c1f07269a3617d, type: 3}
 --- !u!4 &4285000894260529900 stripped
 Transform:
@@ -234,6 +247,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 3564614371045924536, guid: 31165ab1c9ffb1b4393a869ca8d9c607, type: 3}
@@ -285,6 +299,9 @@ PrefabInstance:
       value: Card_Club8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31165ab1c9ffb1b4393a869ca8d9c607, type: 3}
 --- !u!4 &4285000895183983827 stripped
 Transform:
@@ -296,6 +313,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 2470115474564043218, guid: bf75833717328c748bbbef20e8986a16, type: 3}
@@ -304,15 +322,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2470115474564043218, guid: bf75833717328c748bbbef20e8986a16, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.038502723
+      value: 0.0389
       objectReference: {fileID: 0}
     - target: {fileID: 2470115474564043218, guid: bf75833717328c748bbbef20e8986a16, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00059986115
+      value: -0.0006
       objectReference: {fileID: 0}
     - target: {fileID: 2470115474564043218, guid: bf75833717328c748bbbef20e8986a16, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.046361625
+      value: -0.0447
       objectReference: {fileID: 0}
     - target: {fileID: 2470115474564043218, guid: bf75833717328c748bbbef20e8986a16, type: 3}
       propertyPath: m_LocalRotation.w
@@ -347,6 +365,9 @@ PrefabInstance:
       value: Card_Club6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf75833717328c748bbbef20e8986a16, type: 3}
 --- !u!4 &4285000893590792884 stripped
 Transform:
@@ -358,6 +379,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 1213049862783527719, guid: c88d2bc2e8a4e0f4a94e90b25657eca8, type: 3}
@@ -409,6 +431,9 @@ PrefabInstance:
       value: -81.169
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c88d2bc2e8a4e0f4a94e90b25657eca8, type: 3}
 --- !u!4 &4285000894213595127 stripped
 Transform:
@@ -420,6 +445,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 1337235916737730652, guid: 60fe154d0d5302e429e647a07712a783, type: 3}
@@ -471,6 +497,9 @@ PrefabInstance:
       value: -33.434
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60fe154d0d5302e429e647a07712a783, type: 3}
 --- !u!4 &4285000894546950919 stripped
 Transform:
@@ -482,6 +511,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 8303500603004979751, guid: 622932214f41b5f4991ddf56e8795153, type: 3}
@@ -533,6 +563,9 @@ PrefabInstance:
       value: Card_ClubJack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 622932214f41b5f4991ddf56e8795153, type: 3}
 --- !u!4 &4285000894461317606 stripped
 Transform:
@@ -544,6 +577,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 8135889440831916462, guid: 45b0da87b7aa95043ac945346660c238, type: 3}
@@ -595,6 +629,9 @@ PrefabInstance:
       value: Card_Club10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45b0da87b7aa95043ac945346660c238, type: 3}
 --- !u!4 &4285000895016566455 stripped
 Transform:
@@ -606,6 +643,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 8559984749219713838, guid: d9cf5bcb0390da349a9956421105f799, type: 3}
@@ -657,6 +695,9 @@ PrefabInstance:
       value: Card_Club7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9cf5bcb0390da349a9956421105f799, type: 3}
 --- !u!4 &4285000894262227625 stripped
 Transform:
@@ -668,6 +709,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 7068522969558399581, guid: d9e3c74f8d6625445af8dbcf82cf1dab, type: 3}
@@ -719,6 +761,9 @@ PrefabInstance:
       value: Card_Club5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9e3c74f8d6625445af8dbcf82cf1dab, type: 3}
 --- !u!4 &4285000893113966076 stripped
 Transform:
@@ -730,6 +775,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 4699265818613305834, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
@@ -781,6 +827,9 @@ PrefabInstance:
       value: -92.803
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b1450ad91edbd64199dee0d33d9c9a2, type: 3}
 --- !u!4 &4285000894854074442 stripped
 Transform:
@@ -792,6 +841,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 903201411987816618}
     m_Modifications:
     - target: {fileID: 4852999943291724084, guid: 16ee3d16d985a9d4f9275ef7691e0e43, type: 3}
@@ -843,6 +893,9 @@ PrefabInstance:
       value: Card_ClubKing
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16ee3d16d985a9d4f9275ef7691e0e43, type: 3}
 --- !u!4 &4285000894544937873 stripped
 Transform:
