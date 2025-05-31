@@ -69,6 +69,8 @@ namespace _Game
             {
                 yield return EnemyTurn();
             }
+
+            playerFirstTurn = !playerFirstTurn;
         }
 
         public void OpenCards()
@@ -77,7 +79,14 @@ namespace _Game
             float value = G.board.CalculateValue(G.board.playerCards);
             G.main.scoreText.text = value.ToString();
             isPlayerTurn = false;
-            
+            StartCoroutine(FinishRound());
+        }
+
+        private IEnumerator FinishRound()
+        {
+            yield return new WaitForSeconds(2f);
+            G.board.ClearBoard();
+            yield return StartRound();
         }
     }
 }
