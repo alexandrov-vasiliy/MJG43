@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using _Game;
 using _Game.Card;
 using Random = UnityEngine.Random;
 
-public class DeckGenerator : MonoBehaviour
+public class Deck : MonoBehaviour
 {
     [Header("Список префабов карт")]
     [Tooltip("Перетащите сюда все префабы ваших карт")]
@@ -28,14 +30,11 @@ public class DeckGenerator : MonoBehaviour
     // Вспомогательный список, куда сохраняем перемешанные префабы до инстанциирования
     private List<GameObject> shuffledPrefabs = new List<GameObject>();
 
-    void Start()
+    private void Awake()
     {
-        if (shuffleOnStart)
-        {
-            GenerateDeck();
-        }
+        G.deck = this;
     }
-
+    
     /// <summary>
     /// Перемешивает исходный список префабов, создаёт стопку на сцене
     /// и заполняет очередь cardQueue так, чтобы Dequeue() возвращал "верхнюю" карту.
@@ -126,6 +125,10 @@ public class DeckGenerator : MonoBehaviour
         for (int i = instantiatedCards.Count - 1; i >= 0; i--)
         {
             Card card = instantiatedCards[i].AddComponent<Card>();
+            var ( suit , value)= ParseCardName(card.gameObject.name);
+            card.cardSuit = suit;
+            card.value = value;
+            Debug.Log($" added card to deck: {card.gameObject.name}, suit {card.cardSuit}"); 
             cardQueue.Enqueue(card);
         }
 
@@ -173,7 +176,7 @@ public class DeckGenerator : MonoBehaviour
         return cardQueue.Count;
     }
 
-    private void OnMouseDown()
+    /*private void OnMouseDown()
     {
         if(G.hand.isFull) return;
         
@@ -182,5 +185,39 @@ public class DeckGenerator : MonoBehaviour
             GenerateDeck();
         }
         G.hand.GetCard(DrawCard());
+    }*/
+
+    public (ECardSuit suit, int value) ParseCardName(string cardName)
+    {
+        // Удаляем (Clone) из названия
+        if (cardName.Contains("("))
+            cardName = cardName.Substring(0, cardName.IndexOf('('));
+
+        // Шаблон: Card_(Масть)(Номинал)
+        var match = Regex.Match(cardName, @"Card_([A-Za-z]+?)(\d+|Jack|Queen|King|Ace)");
+        if (match.Success)
+        {
+            string suitStr = match.Groups[1].Value;
+            string valueStr = match.Groups[2].Value;
+
+            if (Enum.TryParse<ECardSuit>(suitStr, true, out var suit))
+            {
+                int numericValue = valueStr switch
+                {
+                    "Jack" => 10,
+                    "Queen" => 10,
+                    "King" => 10,
+                    "Ace" => 11,
+                    _ => int.TryParse(valueStr, out int numVal)
+                        ? numVal
+                        : throw new Exception($"Не удалось преобразовать номинал: {valueStr}")
+                };
+
+                return (suit, numericValue);
+            }
+        }
+
+        throw new Exception($"Не удалось определить масть и номинал для карты {cardName}");
     }
+
 }

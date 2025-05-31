@@ -1,10 +1,8 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using _Game;
 using _Game.Card;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -17,13 +15,14 @@ public class Hand : MonoBehaviour
     private float PLACEMENT_X_RANGE = 1.7f;
     public float ZSpace = -0.4f;
     public bool isFull => cards.Count >= maxAmount;
+    public bool isPlayer = false;
 
-    private void Awake()
+    public Card GetRandomCard()
     {
-        G.hand = this;
+        return cards[Random.Range(0, cards.Count)];
     }
 
-    public void GetCard(Card card)
+    public void PickCard(Card card)
     {
         if (isFull)
         {
@@ -34,7 +33,11 @@ public class Hand : MonoBehaviour
         Debug.Log(cards.Count);
         PlaceCard(card);
     }
-
+    
+    public void RemoveCard(Card card)
+    {
+        cards.Remove(card);
+    }
 
     private void PlaceCard(Card card)
     {
@@ -58,12 +61,22 @@ public class Hand : MonoBehaviour
                 float rotation = normalizedX * -11f;
                 float yPos = 1.1f + (0.1f * -Mathf.Abs(normalizedX));
                 
-                c.transform.DOLocalMove(new Vector3(xPos, yPos,  zPos), 0.4f);
-                c.transform.localRotation = Quaternion.Euler(5.5f, 0, rotation);
+                c.transform.DOLocalRotate(new Vector3(0, 0, rotation), 0.2f);
+                c.transform.DOLocalMove(new Vector3(xPos, yPos,  zPos), 0.2f).OnComplete(() => c.CardInHand());
+                c.inHand = isPlayer;
             }
         }
 
         previuosCard = card;
     }
 
+    public IEnumerator Draw()
+    {
+        for (int i = 0; i < maxAmount; i++)
+        {
+            yield return new WaitForSeconds(0.4f);
+            this.PickCard(G.deck.DrawCard());
+        }
+    }
+    
 }

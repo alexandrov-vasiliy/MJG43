@@ -2,9 +2,9 @@ namespace _Game.Card
 {
     public enum ECardSuit
     {
-        Hearts,
-        Diamonds,
-        Spades,
-        Clubs
+        Heart,
+        Diamond,
+        Spade,
+        Club
     }
 }

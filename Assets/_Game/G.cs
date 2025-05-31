@@ -4,6 +4,14 @@
     {
         public static Main main;
 
-        public static Hand hand;
+        public static Hand playerHand;
+        
+        public static Hand enemyHand;
+
+        public static Board board;
+
+        public static Deck deck;
+
+        public static CoreLoop coreLoop;
     }
 }
