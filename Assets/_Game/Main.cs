@@ -10,12 +10,14 @@ namespace _Game
     {
         [SerializeField] private Hand playerHand;
         [SerializeField] private Hand enemyHand;
+        [SerializeField] private Brush _brush;
 
         public DeckShuffler deckShuffler;
 
         public TMP_Text scoreText;
         private void Awake()
         {
+            G.brush = _brush;
             G.main = this;
             G.playerHand = playerHand;
             G.playerHand.isPlayer = true;

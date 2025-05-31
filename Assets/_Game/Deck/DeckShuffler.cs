@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 namespace _Game.Deck
 {
@@ -9,8 +12,16 @@ namespace _Game.Deck
         public DeckData negativeDeck;
         public DeckData blankDeck;
 
+        private List<GameObject> allCards = new List<GameObject>();
+
         private void Start()
         {
+            allCards.AddRange(
+                defaultDeck.cardPrefabs
+                    .Concat(negativeDeck.cardPrefabs)
+                    .Concat(blankDeck.cardPrefabs)
+            );
+            
             G.coreLoop.OnRoundStart += HandleRoundStart;
         }
 
@@ -35,5 +46,27 @@ namespace _Game.Deck
             }
 
         }
+
+        public GameObject GenerateOneCard()
+        {
+            if (allCards == null || allCards.Count == 0)
+            {
+                Debug.LogError("Deck is empty!");
+                return null;
+            }
+
+            var random = new System.Random();
+            var prefab = allCards[random.Next(allCards.Count)];
+    
+            if (prefab == null)
+            {
+                Debug.LogError("Selected prefab is null");
+                return null;
+            }
+
+            var instance = Instantiate(prefab);
+            return instance;
+        }
+        
     }
 }

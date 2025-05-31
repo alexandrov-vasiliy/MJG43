@@ -22,6 +22,7 @@ public class Board : MonoBehaviour
     public void PlayCard(Card card)
     {
         card.inHand = false;
+        card.isFaceUp = false;
         var place = playerCardsPlace;
 
         card.transform.SetParent(place);
@@ -71,6 +72,7 @@ public class Board : MonoBehaviour
     {
         foreach (var playerCard in playerCards)
         {
+            playerCard.isFaceUp = true;
             playerCard.transform.DOLocalRotate(new Vector3(-90, 0, 0), 0.2f);
             yield return new WaitForSeconds(0.1f);
         }

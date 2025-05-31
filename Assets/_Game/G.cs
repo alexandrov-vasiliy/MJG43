@@ -15,9 +15,12 @@ namespace _Game
         public static Deck.Deck deck;
 
         public static CoreLoop coreLoop;
+
+        public static Brush brush;
         
         public static UI ui;
 
         public static DeckShuffler deckShuffler;
+        
     }
 }

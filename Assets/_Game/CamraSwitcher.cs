@@ -6,7 +6,7 @@ public class CameraSwitcher : MonoBehaviour
 {
     public CinemachineCamera vcMain;
     public CinemachineCamera vcFront;
-    public CinemachineCamera vcBack;
+    //public CinemachineCamera vcBack;
 
     private int _switcher = 0;
 
@@ -34,9 +34,9 @@ public class CameraSwitcher : MonoBehaviour
             case 1:
                 SetCamera(vcFront);
                 break;
-            case -1:
+            /*case -1:
                 SetCamera(vcBack);
-                break;
+                break;*/
         }
         
     }
@@ -46,7 +46,7 @@ public class CameraSwitcher : MonoBehaviour
         // Сброс всех приоритетов
         vcMain.Priority = 0;
         vcFront.Priority = 0;
-        vcBack.Priority = 0;
+        //vcBack.Priority = 0;
 
         // Устанавливаем активной
         activeCam.Priority = 10;

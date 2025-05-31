@@ -17,9 +17,13 @@ namespace _Game.Card
         public ECardSuit cardSuit;
         public int value;
 
-        public bool inHand = false;
+        
         public float hoverOffset = 0.2f;
         public CardType cardType = CardType.DEFAULT;
+        
+        public bool inHand = false;
+        //public bool isOnBoard = false;
+        public bool isFaceUp = false;
 
         public void Init()
         {
@@ -52,6 +56,13 @@ namespace _Game.Card
                 G.board.PlayCard(this);
                 G.coreLoop.NextTurn();
             }
+        }
+
+        public void SetCard(Card reference)
+        {
+            value = reference.value;
+            cardType = reference.cardType;
+            cardSuit = reference.cardSuit;
         }
     }
 
