@@ -1,0 +1,186 @@
+using System;
+using UnityEngine;
+using System.Collections.Generic;
+using _Game;
+using _Game.Card;
+using Random = UnityEngine.Random;
+
+public class DeckGenerator : MonoBehaviour
+{
+    [Header("Список префабов карт")]
+    [Tooltip("Перетащите сюда все префабы ваших карт")]
+    public List<GameObject> cardPrefabs;
+
+    [Header("Настройки позиции стопки")]
+    [Tooltip("Точка, откуда будет начинаться стопка")]
+    public Transform deckOrigin;
+
+    [Tooltip("Смещение между соседними картами (например, Vector3(0, 0.02f, 0) для лёгкого подъёма по Y)")]
+    public Vector3 cardOffset = new Vector3(0f, 0.02f, 0f);
+
+    [Header("Дополнительно")]
+    [Tooltip("Если включено, колода сгенерируется автоматически в Start()")]
+    public bool shuffleOnStart = true;
+
+    // Очередь игровых объектов-карт (GameObject), чтобы можно было вызывать DrawCard()
+    private Queue<Card> cardQueue = new Queue<Card>();
+
+    // Вспомогательный список, куда сохраняем перемешанные префабы до инстанциирования
+    private List<GameObject> shuffledPrefabs = new List<GameObject>();
+
+    void Start()
+    {
+        if (shuffleOnStart)
+        {
+            GenerateDeck();
+        }
+    }
+
+    /// <summary>
+    /// Перемешивает исходный список префабов, создаёт стопку на сцене
+    /// и заполняет очередь cardQueue так, чтобы Dequeue() возвращал "верхнюю" карту.
+    /// </summary>
+    public void GenerateDeck()
+    {
+        // Проверка на то, что префабы заданы
+        if (cardPrefabs == null || cardPrefabs.Count == 0)
+        {
+            Debug.LogWarning("DeckGenerator: список cardPrefabs пуст или не задан!");
+            return;
+        }
+
+        // 1) Копируем все префабы во временный список
+        shuffledPrefabs = new List<GameObject>(cardPrefabs);
+
+        // 2) Перемешиваем shuffledPrefabs (алгоритм Фишера–Йетса)
+        for (int i = shuffledPrefabs.Count - 1; i > 0; i--)
+        {
+            int rnd = Random.Range(0, i + 1);
+            GameObject temp = shuffledPrefabs[i];
+            shuffledPrefabs[i] = shuffledPrefabs[rnd];
+            shuffledPrefabs[rnd] = temp;
+        }
+
+        // 3) Сначала очищаем предыдущую стопку в сцене (если она была)
+        if (deckOrigin != null)
+        {
+            for (int i = deckOrigin.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(deckOrigin.GetChild(i).gameObject);
+            }
+        }
+        else
+        {
+            // Если deckOrigin не задан, чистим дочерние объекты объекта-скрипта
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(transform.GetChild(i).gameObject);
+            }
+        }
+
+        // 4) Очищаем текущую очередь перед заполнением новой
+        cardQueue.Clear();
+
+        // 5) Будем хранить список созданных объектов, чтобы потом правильно заполнить очередь
+        List<GameObject> instantiatedCards = new List<GameObject>();
+
+        // 6) Инстанциируем карты и сразу выстраиваем стопкой
+        //    Делаем это по порядку shuffledPrefabs[0] -> shuffledPrefabs[last].
+        //    shuffledPrefabs[0] окажется внизу стопки, а shuffledPrefabs[last] — наверху.
+        for (int i = 0; i < shuffledPrefabs.Count; i++)
+        {
+            GameObject prefab = shuffledPrefabs[i];
+            if (prefab == null)
+                continue;
+
+            Vector3 spawnPos;
+            Quaternion spawnRot;
+            if (deckOrigin != null)
+            {
+                // Позиция и ротация исходя из deckOrigin
+                spawnPos = deckOrigin.position + deckOrigin.TransformVector(cardOffset * i);
+                spawnRot = deckOrigin.rotation;
+            }
+            else
+            {
+                // Если deckOrigin не задан, используем transform этого объекта
+                spawnPos = transform.position + cardOffset * i;
+                spawnRot = transform.rotation;
+            }
+
+            // Инстанциируем карту
+            GameObject cardObj = Instantiate(prefab, spawnPos, spawnRot);
+            cardObj.transform.rotation = Quaternion.Euler(90, 0, 0);
+            // Делаем её дочерней (для порядка в иерархии)
+            if (deckOrigin != null)
+                cardObj.transform.SetParent(deckOrigin);
+            else
+                cardObj.transform.SetParent(transform);
+
+            instantiatedCards.Add(cardObj);
+        }
+
+        // 7) Теперь у нас есть список instantiatedCards, упорядоченный от "низа стопки" к "верху стопки"
+        //    Чтобы очередь Dequeue() возвращала "верхнюю" карту, заполняем её в обратном порядке:
+        //    сначала enqueue последний элемент (верх), потом предпоследний и т.д.
+        for (int i = instantiatedCards.Count - 1; i >= 0; i--)
+        {
+            Card card = instantiatedCards[i].AddComponent<Card>();
+            cardQueue.Enqueue(card);
+        }
+
+        Debug.Log($"DeckGenerator: колода сгенерирована и выложена стопкой из {shuffledPrefabs.Count} карт.");
+    }
+
+    /// <summary>
+    /// Берёт «верхнюю» карту из стопки (очереди) и возвращает ссылку на GameObject.
+    /// Если очередь пуста, возвращает null.
+    /// </summary>
+    public Card DrawCard()
+    {
+        if (cardQueue.Count == 0)
+        {
+            Debug.LogWarning("DeckGenerator: попытка взять карту, но колода пуста!");
+            return null;
+        }
+
+        // 1) Получаем верхнюю карту
+        Card topCard = cardQueue.Dequeue();
+
+        // 2) Убираем её из сцены или делаем неактивной — решайте сами, как хотите визуально оформить "взятие".
+        //    Например, сразу скрыть её:
+        // topCard.SetActive(false);
+
+        //    Или переместить куда-то отдельно (например, в руку игрока):
+        // topCard.transform.SetParent(null);
+        // topCard.transform.position = someOtherPosition;
+
+        //    В этом примере просто оставим её в сцене, но уберём дочерность из стопки:
+        if (deckOrigin != null)
+            topCard.transform.SetParent(null);
+        else
+            topCard.transform.SetParent(null);
+
+        Debug.Log($"DeckGenerator: взята карта {topCard.name}. Осталось в колоде: {cardQueue.Count}.");
+        return topCard;
+    }
+
+    /// <summary>
+    /// Для отладки: возвращает количество карт, оставшихся в очереди (стопке).
+    /// </summary>
+    public int CardsRemaining()
+    {
+        return cardQueue.Count;
+    }
+
+    private void OnMouseDown()
+    {
+        if(G.hand.isFull) return;
+        
+        if (CardsRemaining() == 0)
+        {
+            GenerateDeck();
+        }
+        G.hand.GetCard(DrawCard());
+    }
+}

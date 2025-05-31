@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game;
 using _Game.Card;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,14 +11,12 @@ using UnityEngine;
 public class Hand : MonoBehaviour
 {
     public int maxAmount;
-
-    public float firstX;
-
-    public float lastX;
-
     public List<Card> cards = new List<Card>();
 
     private Card previuosCard;
+    private float PLACEMENT_X_RANGE = 1.7f;
+    public float ZSpace = -0.4f;
+    public bool isFull => cards.Count >= maxAmount;
 
     private void Awake()
     {
@@ -26,33 +25,45 @@ public class Hand : MonoBehaviour
 
     public void GetCard(Card card)
     {
+        if (isFull)
+        {
+            return;
+        }
         cards.Add(card);
         card.transform.SetParent(transform);
         Debug.Log(cards.Count);
         PlaceCard(card);
     }
 
+
     private void PlaceCard(Card card)
     {
         var position = transform.position;
-
-        if (cards.Count == 1)
+        float spacingX = PLACEMENT_X_RANGE / cards.Count;
+        float leftAnchorX = -1.9f;
+        
+        foreach (Card c in cards)
         {
-            card.transform.position = new Vector3(firstX + (lastX - firstX)/2, position.y, position.z);
-            previuosCard = card;
-            return;
+            if (c != null)
+            {
+
+                int index = cards.IndexOf(c);
+                float xPos = leftAnchorX + (spacingX * index);
+                
+                float zPos = index * ZSpace;
+                Debug.Log($" index: {index} zPos: {zPos} ");
+                float normalizedX = Mathf.Abs(xPos - leftAnchorX) / PLACEMENT_X_RANGE;
+                normalizedX = (normalizedX * 2f) - 1f;
+
+                float rotation = normalizedX * -11f;
+                float yPos = 1.1f + (0.1f * -Mathf.Abs(normalizedX));
+                
+                c.transform.DOLocalMove(new Vector3(xPos, yPos,  zPos), 0.4f);
+                c.transform.localRotation = Quaternion.Euler(5.5f, 0, rotation);
+            }
         }
-
-        float step = (lastX - firstX) / cards.Count;
-
-        for (int i = 0; i < cards.Count; i++)
-        {
-            float x = firstX + step * i;
-
-            cards[i].transform.position = new Vector3(x, position.y, position.z);
-        }
-
 
         previuosCard = card;
     }
+
 }

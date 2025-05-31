@@ -8,11 +8,7 @@ namespace _Game.Card
         public ECardSuit cardSuit;
         public int value;
         
-        public void OnMouseDown()
-        {
-            G.hand.GetCard(this);
-        }
-    
+
         
     }
 
