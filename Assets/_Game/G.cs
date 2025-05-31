@@ -13,5 +13,7 @@
         public static Deck deck;
 
         public static CoreLoop coreLoop;
+        
+        public static UI ui;
     }
 }

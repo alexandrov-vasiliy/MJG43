@@ -144,27 +144,12 @@ public class Deck : MonoBehaviour
         if (cardQueue.Count == 0)
         {
             Debug.LogWarning("DeckGenerator: попытка взять карту, но колода пуста!");
-            return null;
+            GenerateDeck();
         }
 
         // 1) Получаем верхнюю карту
         Card topCard = cardQueue.Dequeue();
 
-        // 2) Убираем её из сцены или делаем неактивной — решайте сами, как хотите визуально оформить "взятие".
-        //    Например, сразу скрыть её:
-        // topCard.SetActive(false);
-
-        //    Или переместить куда-то отдельно (например, в руку игрока):
-        // topCard.transform.SetParent(null);
-        // topCard.transform.position = someOtherPosition;
-
-        //    В этом примере просто оставим её в сцене, но уберём дочерность из стопки:
-        if (deckOrigin != null)
-            topCard.transform.SetParent(null);
-        else
-            topCard.transform.SetParent(null);
-
-        Debug.Log($"DeckGenerator: взята карта {topCard.name}. Осталось в колоде: {cardQueue.Count}.");
         return topCard;
     }
 

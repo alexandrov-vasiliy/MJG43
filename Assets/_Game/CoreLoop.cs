@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Game
 {
@@ -9,6 +10,10 @@ namespace _Game
         public int cardByTurn = 2;
         public bool isPlayerTurn = false;
         public bool playerFirstTurn = true;
+
+        public int playerWins = 0;
+        public int dealerWins = 0;
+        
         private void Awake()
         {
             G.coreLoop = this;
@@ -47,6 +52,18 @@ namespace _Game
                 OpenCards();
                 yield break;
             }
+
+            if (G.board.CalculateValue(G.board.playerCards) >= 30)
+            {
+                float r = Random.Range(0f, 1f);
+                Debug.Log(r);
+                if (r >= 0.6f)
+                {     
+                    OpenCards();
+                    yield break;
+                }
+           
+            }
             
             var card = G.enemyHand.GetRandomCard();
             
@@ -77,6 +94,7 @@ namespace _Game
         {
             StartCoroutine(G.board.RevealCards());
             float value = G.board.CalculateValue(G.board.playerCards);
+            CalculateWinner(value);
             G.main.scoreText.text = value.ToString();
             isPlayerTurn = false;
             StartCoroutine(FinishRound());
@@ -87,6 +105,23 @@ namespace _Game
             yield return new WaitForSeconds(2f);
             G.board.ClearBoard();
             yield return StartRound();
+        }
+
+        private void CalculateWinner(float value)
+        {
+            bool isPlayerWins = (value >= 21 && isPlayerTurn) || (value < 21 && !isPlayerTurn);
+
+            if (isPlayerWins)
+            {
+                playerWins++;
+            }
+            else
+            {
+                dealerWins++;
+            }
+
+            G.ui.debug.text = $"player wins: {playerWins}";
+            G.ui.debug.text += $"\ndealer wins: {dealerWins}";
         }
     }
 }

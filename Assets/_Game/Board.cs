@@ -56,7 +56,7 @@ public class Board : MonoBehaviour
         {
             if (card.cardSuit == ECardSuit.Club || card.cardSuit == ECardSuit.Spade)
             {
-                value -= card.value;
+                value += card.value;
             }
             else
             {

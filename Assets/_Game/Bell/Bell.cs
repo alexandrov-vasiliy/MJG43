@@ -8,6 +8,7 @@ namespace _Game.Bell
     {
         private Outline outline;
 
+        public bool canRing = false;
         private void Start()
         {
             outline = GetComponent<Outline>();
@@ -15,12 +16,13 @@ namespace _Game.Bell
 
         private void Update()
         {
-            outline.enabled = G.coreLoop.isPlayerTurn;
+            canRing = G.coreLoop.isPlayerTurn && G.board.playerCards.Count > 1;
+            outline.enabled = canRing;
         }
 
         private void OnMouseDown()
         {
-            if(!G.coreLoop.isPlayerTurn) return;
+            if(!canRing) return;
 
             G.coreLoop.OpenCards();
         }

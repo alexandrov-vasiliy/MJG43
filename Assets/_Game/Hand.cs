@@ -30,7 +30,6 @@ public class Hand : MonoBehaviour
         }
         cards.Add(card);
         card.transform.SetParent(transform);
-        Debug.Log(cards.Count);
         PlaceCard(card);
     }
     
@@ -54,7 +53,6 @@ public class Hand : MonoBehaviour
                 float xPos = leftAnchorX + (spacingX * index);
                 
                 float zPos = index * ZSpace;
-                Debug.Log($" index: {index} zPos: {zPos} ");
                 float normalizedX = Mathf.Abs(xPos - leftAnchorX) / PLACEMENT_X_RANGE;
                 normalizedX = (normalizedX * 2f) - 1f;
 
@@ -72,7 +70,8 @@ public class Hand : MonoBehaviour
 
     public IEnumerator Draw()
     {
-        for (int i = 0; i < maxAmount; i++)
+        int needToDraw = maxAmount - cards.Count;
+        for (int i = 0; i <  needToDraw; i++)
         {
             yield return new WaitForSeconds(0.4f);
             this.PickCard(G.deck.DrawCard());
