@@ -1,4 +1,6 @@
-﻿namespace _Game
+﻿using _Game.Deck;
+
+namespace _Game
 {
     public static class G
     {
@@ -10,10 +12,12 @@
 
         public static Board board;
 
-        public static Deck deck;
+        public static Deck.Deck deck;
 
         public static CoreLoop coreLoop;
         
         public static UI ui;
+
+        public static DeckShuffler deckShuffler;
     }
 }

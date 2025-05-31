@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff3270a2f9d46d983dcb6c9a7ceb578, type: 3}
+  m_Name: NegativeDeck
+  m_EditorClassIdentifier: 
+  cardPrefabs:
+  - {fileID: 4699265818613305834, guid: 1dcfe98eea94ce841bc9640f2cae67a8, type: 3}
+  - {fileID: 9043505585276897684, guid: 50a8e192f8e2d1c4f94830e7164260b9, type: 3}
+  - {fileID: 8678477582111002781, guid: 04dab2bc0d6304a4aaefd2b15bfc45fc, type: 3}
+  - {fileID: 6290163690470343772, guid: 114839fdeb7cda74b831ef4bbe4fa9f0, type: 3}
+  - {fileID: 8656600534359927316, guid: 05e4afc282633d5458594f7e64394f8b, type: 3}
+  - {fileID: 9155915166557002907, guid: 5beb4973b39e9184eae813a1cce212b2, type: 3}
+  - {fileID: 3346957821209517961, guid: cdddf2a5dbf8fde4b942ff2cb5cf8f35, type: 3}
+  - {fileID: 851447088652125863, guid: ae4378fe931a8fd4cb28b2095dff7114, type: 3}
+  - {fileID: 3222222539241308848, guid: 057ce8f60a0c4ea49a1d2e7f0e9af97d, type: 3}
+  - {fileID: 2424780035722609411, guid: 69b17ac545949804baf852695597c10d, type: 3}
+  - {fileID: 4251624996254033595, guid: 199b2a77868eac34987fbd5129790f37, type: 3}
+  - {fileID: 6093760270803575120, guid: 5d8d5621c0607c743a8317c5af1ffda4, type: 3}

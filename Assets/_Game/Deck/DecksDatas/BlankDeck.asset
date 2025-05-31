@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff3270a2f9d46d983dcb6c9a7ceb578, type: 3}
+  m_Name: BlankDeck
+  m_EditorClassIdentifier: 
+  cardPrefabs:
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}
+  - {fileID: 4704451784657835086, guid: 4048e980851c2a54985bd512557675c3, type: 3}

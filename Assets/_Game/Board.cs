@@ -54,9 +54,9 @@ public class Board : MonoBehaviour
 
         foreach (var card in cards)
         {
-            if (card.cardSuit == ECardSuit.Club || card.cardSuit == ECardSuit.Spade)
+            if (card.cardType == CardType.NEGATIVE)
             {
-                value += card.value;
+                value -= card.value;
             }
             else
             {

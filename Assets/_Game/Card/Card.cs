@@ -5,6 +5,12 @@ using UnityEngine.Serialization;
 
 namespace _Game.Card
 {
+    public enum CardType
+    {
+        DEFAULT,
+        NEGATIVE
+    }
+    
     [RequireComponent(typeof(BoxCollider))]
     public class Card : MonoBehaviour
     {
@@ -13,6 +19,7 @@ namespace _Game.Card
 
         public bool inHand = false;
         public float hoverOffset = 0.2f;
+        public CardType cardType = CardType.DEFAULT;
 
         public void Init()
         {

@@ -7,16 +7,25 @@ namespace _Game
 {
     public class CoreLoop : MonoBehaviour
     {
-        public int cardByTurn = 2;
         public bool isPlayerTurn = false;
         public bool playerFirstTurn = true;
 
         public int playerWins = 0;
         public int dealerWins = 0;
-        
+
+        public int round = 0;
+
+        public event Action<int> OnRoundStart;
         private void Awake()
         {
             G.coreLoop = this;
+        }
+
+        private void Update()
+        {
+            G.ui.debug.text = $" round: {round}";
+            G.ui.debug.text += $"\nplayer wins: {playerWins}";
+            G.ui.debug.text += $"\ndealer wins: {dealerWins}";
         }
 
         public IEnumerator PlayerDraw()
@@ -53,7 +62,7 @@ namespace _Game
                 yield break;
             }
 
-            if (G.board.CalculateValue(G.board.playerCards) >= 30)
+            if (G.board.playerCards.Count >= 4 || G.board.CalculateValue(G.board.playerCards) >= 30)
             {
                 float r = Random.Range(0f, 1f);
                 Debug.Log(r);
@@ -70,14 +79,18 @@ namespace _Game
             G.board.PlayCard(card);
             G.enemyHand.RemoveCard(card);
             
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
             yield return PlayerTurn();
         }
 
         public IEnumerator StartRound()
         {
+            round++;
+            OnRoundStart?.Invoke(round);
+            
             yield return PlayerDraw();
             yield return EnemyDraw();
+            
             if (playerFirstTurn)
             {
                 yield return PlayerTurn();
@@ -120,8 +133,7 @@ namespace _Game
                 dealerWins++;
             }
 
-            G.ui.debug.text = $"player wins: {playerWins}";
-            G.ui.debug.text += $"\ndealer wins: {dealerWins}";
+      
         }
     }
 }
