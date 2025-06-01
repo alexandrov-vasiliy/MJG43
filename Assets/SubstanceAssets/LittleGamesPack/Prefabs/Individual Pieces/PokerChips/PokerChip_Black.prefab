@@ -537,6 +537,7 @@ MonoBehaviour:
   chipTmp: {fileID: 4991789841521410113}
   type: 0
   highLight: 0
+  outline: {fileID: 0}
 --- !u!114 &-2089338904451208340
 MonoBehaviour:
   m_ObjectHideFlags: 0

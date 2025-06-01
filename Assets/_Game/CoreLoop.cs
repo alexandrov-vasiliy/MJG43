@@ -49,6 +49,7 @@ namespace _Game
 
         public IEnumerator PlayerTurn()
         {
+            G.ui.SayPlayCard();
             isPlayerTurn = true;
             yield return null;
         }
@@ -62,11 +63,13 @@ namespace _Game
         {
             isPlayerTurn = false;
             Debug.Log("Enemy Play");
-
-            yield return new WaitForSeconds(0.5f);
+            G.ui.SayMyTurn();
+            float think = Random.Range(0.5f, 2f);
+            yield return new WaitForSeconds(1f);
 
             if (G.enemyHand.cards.Count == 0)
             {
+                G.ui.SayOpen();
                 yield return OpenCards();
                 yield break;
             }
@@ -79,6 +82,7 @@ namespace _Game
                     Debug.Log(r);
                     if (r >= 0.5f)
                     {
+                        G.ui.SayOpen();
                         yield return OpenCards();
                         yield break;
                     }
@@ -92,6 +96,7 @@ namespace _Game
                     Debug.Log(r);
                     if (r >= 0.4f)
                     {
+                        G.ui.SayOpen();
                         yield return OpenCards();
                         yield break;
                     }
@@ -134,7 +139,7 @@ namespace _Game
         public IEnumerator OpenCards()
         {   
             G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcFront);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.7f);
             yield return G.board.RevealCards();
             float value = G.board.CalculateValue(G.board.playerCards);
             yield return CalculateWinner(value);
@@ -174,11 +179,13 @@ namespace _Game
 
             if (isPlayerWins)
             {
+                G.ui.SayPlayerWin();
                 playerWins++;
                 yield return G.betSystem.WinReward();
             }
             else
             {
+                G.ui.SayPlayerLose();
                 dealerWins++;
                 G.betSystem.LoseClear();
             }

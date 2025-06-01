@@ -109,6 +109,7 @@ namespace _Game.Bets
 
         public IEnumerator StartPlaceBet()
         {
+            G.ui.ClearText();
             isBettingStage = true;
             HighilteHolders(playerChipHolders, true);
             HighilteHolders(dealerChipHolders, true);

@@ -10,6 +10,9 @@ public class CameraSwitcher : MonoBehaviour
     public CinemachineCamera vcBets;
     //public CinemachineCamera vcBack;
 
+
+    private CinemachineCamera cachedCamera;
+
     private int _switcher = 0;
 
     private void Awake()
@@ -22,10 +25,21 @@ public class CameraSwitcher : MonoBehaviour
         SetCamera(vcMain); // при старте активируем главную
     }
 
-    /*void Update()
+    void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space Pressed");
+            SetCameraWithoutCache(vcMain);
+        }
+        else if(Input.GetKeyUp(KeyCode.Space))
+        {
+            Debug.Log("Space Up");
+
+            SetCamera(cachedCamera);
+        }
       
-        if (Input.GetKeyDown(KeyCode.W)&&_switcher<1)
+        /*if (Input.GetKeyDown(KeyCode.W)&&_switcher<1)
         {
             _switcher++;
         }
@@ -42,14 +56,17 @@ public class CameraSwitcher : MonoBehaviour
             case 1:
                 SetCamera(vcFront);
                 break;
-            /*case -1:
-                SetCamera(vcBack);
-                break;#1#
-        }
+        }*/
         
-    }*/
+    }
 
     public void SetCamera(CinemachineCamera activeCam)
+    {
+        SetCameraWithoutCache(activeCam);
+        cachedCamera = activeCam;
+    }
+
+    private void SetCameraWithoutCache(CinemachineCamera cam)
     {
         // Сброс всех приоритетов
         vcMain.Priority = 0;
@@ -57,6 +74,6 @@ public class CameraSwitcher : MonoBehaviour
         //vcBack.Priority = 0;
 
         // Устанавливаем активной
-        activeCam.Priority = 10;
+        cam.Priority = 10;
     }
 }
