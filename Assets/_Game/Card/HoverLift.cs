@@ -1,4 +1,5 @@
 ﻿using System;
+using _Game;
 using _Game.Card;
 using UnityEngine;
 using DG.Tweening;
@@ -44,6 +45,7 @@ public class HoverLift : MonoBehaviour
         
         if (_isHovered) return;
         _isHovered = true;
+        CustomCursor.Instance.SetCursor(CustomCursor.CursorType.Interactable);
 
         // Останавливаем все текущие твины на этом объекте, чтобы не было конфликтов
         transform.DOKill();
@@ -63,6 +65,7 @@ public class HoverLift : MonoBehaviour
 
         if (!_isHovered) return;
         _isHovered = false;
+        CustomCursor.Instance.SetCursor(CustomCursor.CursorType.Default);
 
         // Останавливаем текущие твины
         transform.DOKill();

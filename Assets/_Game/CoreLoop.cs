@@ -39,8 +39,7 @@ namespace _Game
 
         public IEnumerator PlayerDraw()
         {
-            status = CoreStatus.mainPart;
-            yield return G.playerHand.Draw();
+           yield return G.playerHand.Draw();
         }
 
         public IEnumerator EnemyDraw()
@@ -68,20 +67,38 @@ namespace _Game
 
             if (G.enemyHand.cards.Count == 0)
             {
-                OpenCards();
+                yield return OpenCards();
                 yield break;
             }
-
-            if (G.board.playerCards.Count >= 4 || G.board.CalculateValue(G.board.playerCards) >= 30)
+            float coinFlip = Random.Range(0, 1);
+            if (coinFlip == 0)
             {
-                float r = Random.Range(0f, 1f);
-                Debug.Log(r);
-                if (r >= 0.6f)
+                if (G.board.playerCards.Count >= 3)
                 {
-                    OpenCards();
-                    yield break;
+                    float r = Random.Range(0f, 1f);
+                    Debug.Log(r);
+                    if (r >= 0.5f)
+                    {
+                        yield return OpenCards();
+                        yield break;
+                    }
                 }
             }
+            else
+            {
+                if (G.board.CalculateValue(G.board.playerCards) >= 21)
+                {
+                    float r = Random.Range(0f, 1f);
+                    Debug.Log(r);
+                    if (r >= 0.4f)
+                    {
+                        yield return OpenCards();
+                        yield break;
+                    }
+                }
+            }
+
+            
 
             var card = G.enemyHand.GetRandomCard();
 
@@ -94,11 +111,13 @@ namespace _Game
 
         public IEnumerator StartRound()
         {
+            G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcMain);
             round++;
             OnRoundStart?.Invoke(round);
-
             yield return PlayerDraw();
             yield return EnemyDraw();
+            
+            yield return G.betSystem.StartPlaceBet();
 
             if (playerFirstTurn)
             {
@@ -112,13 +131,26 @@ namespace _Game
             playerFirstTurn = !playerFirstTurn;
         }
 
-        public void OpenCards()
-        {
-            status = CoreStatus.opening;
-            StartCoroutine(G.board.RevealCards());
-            G.main.scoreText.text = "You can use a brush";
-            StartCoroutine(CheckForUsingBrush());
+        public IEnumerator OpenCards()
+        {   
+            G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcFront);
+            yield return new WaitForSeconds(2);
+            yield return G.board.RevealCards();
+            float value = G.board.CalculateValue(G.board.playerCards);
+            yield return CalculateWinner(value);
+            isPlayerTurn = false;
+            yield return  FinishRound();
         }
+
+        private IEnumerator FinishRound()
+        {
+            yield return new WaitForSeconds(2f);
+            G.board.ClearBoard();
+            G.main.scoreText.text = "";
+
+            yield return StartRound();
+        }
+
 
         private IEnumerator CheckForUsingBrush()
         {
@@ -130,32 +162,28 @@ namespace _Game
             }
             
             float value = G.board.CalculateValue(G.board.playerCards);
-            CalculateWinner(value);
+            yield return CalculateWinner(value);
             G.main.scoreText.text = value.ToString();
             isPlayerTurn = false;
             yield return FinishRound();
         }
-
-        private IEnumerator FinishRound()
-        {
-            status = CoreStatus.finish;
-            yield return new WaitForSeconds(2f);
-            G.board.ClearBoard();
-            yield return StartRound();
-        }
-
-        private void CalculateWinner(float value)
+        
+        private IEnumerator CalculateWinner(float value)
         {
             bool isPlayerWins = (value >= 21 && isPlayerTurn) || (value < 21 && !isPlayerTurn);
 
             if (isPlayerWins)
             {
                 playerWins++;
+                yield return G.betSystem.WinReward();
             }
             else
             {
                 dealerWins++;
+                G.betSystem.LoseClear();
             }
         }
+        
+        
     }
 }

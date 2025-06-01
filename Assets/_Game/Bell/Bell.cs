@@ -24,7 +24,7 @@ namespace _Game.Bell
         {
             if(!canRing) return;
 
-            G.coreLoop.OpenCards();
+           StartCoroutine( G.coreLoop.OpenCards());
         }
     }
 }

@@ -48,6 +48,15 @@ public class Outline : MonoBehaviour {
     }
   }
 
+  public void SetColor()
+  {
+    outlineColor = Color.yellow;
+  }
+  public void SetColorWhite()
+  {
+    outlineColor = Color.white;
+  }
+
   [Serializable]
   private class ListVector3 {
     public List<Vector3> data;

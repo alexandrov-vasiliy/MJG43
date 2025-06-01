@@ -70,11 +70,18 @@ public class Board : MonoBehaviour
 
     public IEnumerator RevealCards()
     {
+        float value = G.board.CalculateValue(G.board.playerCards);
+
         foreach (var playerCard in playerCards)
         {
             playerCard.isFaceUp = true;
             playerCard.transform.DOLocalRotate(new Vector3(-90, 0, 0), 0.2f);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
+            G.ui.floatingValueSpawner.SpawnFloatingValue(playerCard.transform, playerCard.GetCardValue());
         }
+        G.main.scoreText.text = value.ToString();
+        G.main.scoreText.color = (value >= 21) ? Color.green : Color.red;
+        yield return new WaitForSeconds(2f);
+
     }
 }

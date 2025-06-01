@@ -1,4 +1,5 @@
 using System;
+using _Game;
 using UnityEngine;
 using Unity.Cinemachine;
 
@@ -6,17 +7,24 @@ public class CameraSwitcher : MonoBehaviour
 {
     public CinemachineCamera vcMain;
     public CinemachineCamera vcFront;
+    public CinemachineCamera vcBets;
     //public CinemachineCamera vcBack;
 
     private int _switcher = 0;
+
+    private void Awake()
+    {
+        G.cameraSwitcher = this;
+    }
 
     void Start()
     {
         SetCamera(vcMain); // при старте активируем главную
     }
 
-    void Update()
+    /*void Update()
     {
+      
         if (Input.GetKeyDown(KeyCode.W)&&_switcher<1)
         {
             _switcher++;
@@ -36,12 +44,12 @@ public class CameraSwitcher : MonoBehaviour
                 break;
             /*case -1:
                 SetCamera(vcBack);
-                break;*/
+                break;#1#
         }
         
-    }
+    }*/
 
-    void SetCamera(CinemachineCamera activeCam)
+    public void SetCamera(CinemachineCamera activeCam)
     {
         // Сброс всех приоритетов
         vcMain.Priority = 0;

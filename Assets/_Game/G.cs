@@ -1,4 +1,5 @@
-﻿using _Game.Deck;
+﻿using _Game.Bets;
+using _Game.Deck;
 
 namespace _Game
 {
@@ -21,6 +22,10 @@ namespace _Game
         public static UI ui;
 
         public static DeckShuffler deckShuffler;
-        
+
+        public static BetSystem betSystem;
+
+        public static CameraSwitcher cameraSwitcher;
+
     }
 }

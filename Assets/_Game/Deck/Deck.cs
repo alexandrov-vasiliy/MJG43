@@ -130,10 +130,8 @@ namespace _Game.Deck
                     card = instantiatedCards[i].AddComponent<Card.Card>();
                 }
 
-                var ( suit , value)= ParseCardName(card.gameObject.name);
-                card.cardSuit = suit;
-                card.value = value;
-                Debug.Log($" added card to deck: {card.gameObject.name}, suit {card.cardSuit}, value: {card.value}"); 
+                card.InitInDeck();
+                
                 cardQueue.Enqueue(card);
             }
 
@@ -177,38 +175,6 @@ namespace _Game.Deck
         G.hand.GetCard(DrawCard());
     }*/
 
-        public (ECardSuit suit, int value) ParseCardName(string cardName)
-        {
-            // Удаляем (Clone) из названия
-            if (cardName.Contains("("))
-                cardName = cardName.Substring(0, cardName.IndexOf('('));
-
-            // Шаблон: Card_(Масть)(Номинал)
-            var match = Regex.Match(cardName, @"Card_([A-Za-z]+?)(\d+|Jack|Queen|King|Ace)");
-            if (match.Success)
-            {
-                string suitStr = match.Groups[1].Value;
-                string valueStr = match.Groups[2].Value;
-
-                if (Enum.TryParse<ECardSuit>(suitStr, true, out var suit))
-                {
-                    int numericValue = valueStr switch
-                    {
-                        "Jack" => 10,
-                        "Queen" => 10,
-                        "King" => 10,
-                        "Ace" => 11,
-                        _ => int.TryParse(valueStr, out int numVal)
-                            ? numVal
-                            : throw new Exception($"Не удалось преобразовать номинал: {valueStr}")
-                    };
-
-                    return (suit, numericValue);
-                }
-            }
-
-            throw new Exception($"Не удалось определить масть и номинал для карты {cardName}");
-        }
 
     }
 }
