@@ -7,9 +7,9 @@ namespace _Game
 {
     public enum CoreStatus
     {
-        mainPart,
-        opening,
-        finish
+        ChooseCard,
+        Opening,
+        Bet
     }
     
     
@@ -24,7 +24,7 @@ namespace _Game
         public int round = 0;
 
         public event Action<int> OnRoundStart;
-
+        
         private void Awake()
         {
             G.coreLoop = this;
@@ -49,6 +49,7 @@ namespace _Game
 
         public IEnumerator PlayerTurn()
         {
+            status = CoreStatus.ChooseCard;
             G.ui.SayPlayCard();
             isPlayerTurn = true;
             yield return null;
@@ -121,9 +122,10 @@ namespace _Game
             OnRoundStart?.Invoke(round);
             yield return PlayerDraw();
             yield return EnemyDraw();
-            
-            yield return G.betSystem.StartPlaceBet();
 
+            status = CoreStatus.Bet;
+            yield return G.betSystem.StartPlaceBet();
+            status = CoreStatus.ChooseCard;
             if (playerFirstTurn)
             {
                 yield return PlayerTurn();
@@ -137,7 +139,8 @@ namespace _Game
         }
 
         public IEnumerator OpenCards()
-        {   
+        {
+            status = CoreStatus.Opening;
             G.feel.PlayBell();
             G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcFront);
             yield return new WaitForSeconds(0.7f);
@@ -157,23 +160,6 @@ namespace _Game
             yield return StartRound();
         }
 
-
-        private IEnumerator CheckForUsingBrush()
-        {
-            float elapsed = 0f;
-            while (!G.brush.isUsed && elapsed < 5f)
-            {
-                yield return null; // ждём следующий кадр
-                elapsed += Time.deltaTime;
-            }
-            
-            float value = G.board.CalculateValue(G.board.playerCards);
-            yield return CalculateWinner(value);
-            G.main.finalResultTmp.text = value.ToString();
-            isPlayerTurn = false;
-            yield return FinishRound();
-        }
-        
         private IEnumerator CalculateWinner(float value)
         {
             bool isPlayerWins = (value >= 21 && isPlayerTurn) || (value < 21 && !isPlayerTurn);

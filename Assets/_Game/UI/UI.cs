@@ -74,25 +74,25 @@ namespace _Game
         {
             if(tutorialComplete) yield break;
 
-            Say("Добро пожаловать! Сначала сделай ставку и я объясню правила.");
-            yield return new WaitUntil(() => tutorialStep > 0);
+            Say("Добро пожаловать! У каждого из нас в руке по 4 карты.");
+            yield return new WaitForSeconds(tutorialTextDelay);
             Say("Перед началом раунда ты ставишь фишки на кон.");
-            yield return new WaitForSeconds(tutorialTextDelay);
-            Say("У каждого из нас в руке по 4 карты. Мы по очереди играем по одной карте на стол. В слепую, ты не видишь мои карты а я не вижу твои.");
-            yield return new WaitForSeconds(tutorialTextDelay);
+            yield return new WaitUntil(() => tutorialStep > 0);
+            Say(" Мы по очереди играем по одной карте на стол. В слепую, ты не видишь мои карты а я не вижу твои.");
+            yield return new WaitForSeconds(tutorialTextDelay + 1f);
             Say("Выбери карту и сыграй.");
             yield return new WaitUntil(() => tutorialStep > 1);
             Say("После того как ты разыгрываешь карту ход переходит ко мне.");
             yield return new WaitForSeconds(tutorialTextDelay);
             Say("Вместо того чтобы играть карту, ты можешь нажать на колокольчик — и вскрыть все карты на столе.");
-            yield return new WaitForSeconds(tutorialTextDelay);
+            yield return new WaitForSeconds(tutorialTextDelay + 2f);
             Say("Если при вскрытии сумма карт на столе _больше 21_ — тот, кто нажал на колокольчик, побеждает.  ");
-            yield return new WaitForSeconds(tutorialTextDelay);
+            yield return new WaitForSeconds(tutorialTextDelay + 2f);
             Say("Если сумма _21 или меньше_ — он проигрывает.");
-            yield return new WaitForSeconds(tutorialTextDelay);
+            yield return new WaitForSeconds(tutorialTextDelay + 1f);
 
             Say(" Если никто не нажимает на колокольчик, карты вскрывает тот, у кого раньше всех закончатся карты.  ");
-            yield return new WaitForSeconds(tutorialTextDelay);
+            yield return new WaitForSeconds(tutorialTextDelay + 2f);
 
             Say("Так что долго тянуть не получится — следи за руками.");
             yield return new WaitUntil(() => tutorialStep > 2);

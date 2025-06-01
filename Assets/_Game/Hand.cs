@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Game;
 using _Game.Card;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class Hand : MonoBehaviour
@@ -22,6 +24,11 @@ public class Hand : MonoBehaviour
         return cards[Random.Range(0, cards.Count)];
     }
 
+    private void Update()
+    {
+        PlaceCard();
+    }
+
     public void PickCard(Card card)
     {
         G.feel.PlayCardDraw();
@@ -32,17 +39,15 @@ public class Hand : MonoBehaviour
 
         cards.Add(card);
         card.transform.SetParent(transform);
-        UpdatePlaceAllCards();
     }
 
     public void RemoveCard(Card card)
     {
         card.inHand = false;
         cards.Remove(card);
-        UpdatePlaceAllCards();
     }
 
-    private void PlaceCard(Card card)
+    private void PlaceCard()
     {
         float spacingX = PLACEMENT_X_RANGE / cards.Count;
         float leftAnchorX = -1.9f;
@@ -53,25 +58,28 @@ public class Hand : MonoBehaviour
             {
                 int index = cards.IndexOf(c);
                 float xPos = leftAnchorX + (spacingX * index);
-
+                Debug.Log($"Place  Card {c.name}, index: {index}");
+                
                 float zPos = index * ZSpace;
                 float normalizedX = Mathf.Abs(xPos - leftAnchorX) / PLACEMENT_X_RANGE;
                 normalizedX = (normalizedX * 2f) - 1f;
 
                 float rotation = normalizedX * -11f;
                 float yPos = 1.1f + (0.1f * -Mathf.Abs(normalizedX));
-
-                c.transform.DOLocalRotate(new Vector3(0, 0, rotation), 0.2f);
-                c.transform.DOLocalMove(new Vector3(xPos, yPos, zPos), 0.2f).OnComplete(() =>
+                
+                if (c.isHover)
                 {
-                    c.CardInHand();
-                    c.inHand = isPlayer;
-                });
+                    yPos += 0.4f;
+                }
+
+                c.transform.localPosition = Vector3.Lerp(c.transform.localPosition, new Vector3(xPos, yPos, zPos),  Time.deltaTime * 8f );
+                c.transform.localRotation  = Quaternion.Euler(new Vector3(0, 0, rotation));
+                c.inHand = isPlayer;
+
             }
         }
-
-        previuosCard = card;
     }
+    
 
     public IEnumerator Draw()
     {
@@ -85,9 +93,16 @@ public class Hand : MonoBehaviour
 
     public void UpdatePlaceAllCards()
     {
-        foreach (var card in cards)
-        {
-            PlaceCard(card);
-        }
+        PlaceCard();
+    }
+
+    public void SwitchCard(Card addedCard, Card removedCard)
+    {
+        int index = cards.IndexOf(removedCard);
+        cards[index] = addedCard;
+        Destroy(removedCard.gameObject);
+        addedCard.transform.SetParent(transform);
+
+        UpdatePlaceAllCards();
     }
 }

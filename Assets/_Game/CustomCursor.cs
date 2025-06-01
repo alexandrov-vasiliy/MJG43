@@ -24,6 +24,7 @@ public class CustomCursor : MonoBehaviour
     {
         Default = 0,
         Interactable = 1,
+        Brush = 2,
         // Можно добавить, например:
         // Busy = 2,
         // Attack = 3,

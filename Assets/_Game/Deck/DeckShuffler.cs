@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 namespace _Game.Deck
 {
@@ -13,6 +13,11 @@ namespace _Game.Deck
         public DeckData blankDeck;
 
         private List<GameObject> allCards = new List<GameObject>();
+
+        private void Awake()
+        {
+            G.deckShuffler = this;
+        }
 
         private void Start()
         {
@@ -47,7 +52,7 @@ namespace _Game.Deck
 
         }
 
-        public GameObject GenerateOneCard()
+        public Card.Card GenerateOneCard()
         {
             if (allCards == null || allCards.Count == 0)
             {
@@ -55,8 +60,7 @@ namespace _Game.Deck
                 return null;
             }
 
-            var random = new System.Random();
-            var prefab = allCards[random.Next(allCards.Count)];
+            var prefab = allCards[Random.Range(0, allCards.Count)];
     
             if (prefab == null)
             {
@@ -65,7 +69,16 @@ namespace _Game.Deck
             }
 
             var instance = Instantiate(prefab);
-            return instance;
+            
+            Card.Card card;
+            
+            if (!instance.TryGetComponent<Card.Card>(out card))
+            {
+                card = instance.AddComponent<Card.Card>();
+            }
+
+            card.InitInDeck();
+            return card;
         }
         
     }

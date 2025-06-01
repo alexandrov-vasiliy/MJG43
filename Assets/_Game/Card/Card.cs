@@ -27,32 +27,27 @@ namespace _Game.Card
         public bool isFaceUp = false;
 
         private Transform transformInHand;
-        
-        
-        public void InitInHand()
-        {
-            if (TryGetComponent<HoverLift>(out var lift))
-            {
-                lift.SavePosition();
-            }
-            else
-            {
-                gameObject.AddComponent<HoverLift>().SavePosition();
-            }
-        }
+        public bool isHover;
+
+
+    
 
         private void Awake()
         {
             GetComponent<BoxCollider>().size = new Vector3(0.666006148f, 0.974437535f, 0.0017745205f);
         }
         
-        public void CardInHand() 
-        {
-            InitInHand();
-        }
+    
 
         private void OnMouseDown()
         {
+            if (G.brush.brushActivated && inHand)
+            {
+                var card = G.deckShuffler.GenerateOneCard();
+                G.playerHand.SwitchCard(card, this);
+                G.brush.Painted();
+                return;
+            }
             if (inHand && G.coreLoop.isPlayerTurn)
             {
                 G.playerHand.RemoveCard(this);
@@ -118,6 +113,31 @@ namespace _Game.Card
         public int GetCardValue()
         {
             return cardType == CardType.NEGATIVE ? -value : value;
+        }
+        
+        
+        private void OnMouseEnter()
+        {
+            if(!inHand) return;
+        
+            if (isHover) return;
+            isHover = true;
+            G.feel.PlayCardHover();
+            if(!G.brush.brushActivated)
+                CustomCursor.Instance.SetCursor(CustomCursor.CursorType.Interactable);
+
+        }
+
+        private void OnMouseExit()
+        {
+            if(!inHand) return;
+
+            if (!isHover) return;
+            isHover = false;
+
+            if(!G.brush.brushActivated)
+                CustomCursor.Instance.SetCursor(CustomCursor.CursorType.Default);
+
         }
     }
 

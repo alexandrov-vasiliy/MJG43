@@ -11,14 +11,12 @@ namespace _Game
     {
         [SerializeField] private Hand playerHand;
         [SerializeField] private Hand enemyHand;
-        [SerializeField] private Brush _brush;
 
         public DeckShuffler deckShuffler;
 
         [FormerlySerializedAs("scoreText")] public TMP_Text finalResultTmp;
         private void Awake()
         {
-            G.brush = _brush;
             G.main = this;
             G.playerHand = playerHand;
             G.playerHand.isPlayer = true;
@@ -51,10 +49,10 @@ namespace _Game
                         playerChipHolder.GenerateChips(4);
                         break;
                     case 1:
-                        playerChipHolder.GenerateChips(2);
+                        playerChipHolder.GenerateChips(1);
                         break;
                     case 2:
-                        playerChipHolder.GenerateChips(1);
+                        playerChipHolder.GenerateChips(2);
                         break;
 
                 }
