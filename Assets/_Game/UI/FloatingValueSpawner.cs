@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -95,7 +96,7 @@ namespace _Game
                 uiText.color = (value >= 0) ? Color.green : Color.red;
             }
 
-            StartCoroutine(FadeOnly(go));
+            uiText.DOFade(0f, fadeDuration).OnComplete((() => Destroy(uiText.gameObject)));
         }
 
         private IEnumerator FadeOnly(GameObject go)
