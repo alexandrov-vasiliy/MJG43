@@ -234,6 +234,8 @@ namespace MoreMountains.Feedbacks
 		/// </summary>
 		public override void PlayFeedbacks()
 		{
+			if (this == null) return; // Проверка на уничтожение Unity-объекта
+
 			PlayFeedbacksInternal(this.transform.position, FeedbacksIntensity);
 		}
         

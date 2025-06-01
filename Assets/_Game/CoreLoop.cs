@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace _Game
@@ -20,6 +21,7 @@ namespace _Game
         public CoreStatus status;
         public int playerWins = 0;
         public int dealerWins = 0;
+        
 
         public int round = 0;
 
@@ -35,6 +37,7 @@ namespace _Game
             G.ui.debug.text = $" round: {round}";
             G.ui.debug.text += $"\nplayer wins: {playerWins}";
             G.ui.debug.text += $"\ndealer wins: {dealerWins}";
+            
         }
 
         public IEnumerator PlayerDraw()
@@ -117,6 +120,12 @@ namespace _Game
 
         public IEnumerator StartRound()
         {
+            if (round == 10)
+            {
+                SceneManager.LoadScene("Final Scene");
+            }
+            
+            
             G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcMain);
             round++;
             OnRoundStart?.Invoke(round);

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace _Game.Bets
@@ -20,6 +22,7 @@ namespace _Game.Bets
         public bool isBettingStage = false;
 
         private int betResultValue = 0;
+        private bool finishGame = false;
         private void Awake()
         {
             G.betSystem = this;
@@ -58,6 +61,10 @@ namespace _Game.Bets
             }
             else
             {
+                if (betConfirmButton == null)
+                {
+                    return;
+                }
                 betConfirmButton.gameObject.SetActive(false);
                 betResultTmp.text = "";
             }
@@ -141,6 +148,22 @@ namespace _Game.Bets
             betResultValue = 0;
             betResultTmp.text = "";
 
+            foreach (var holder in playerChipHolders)
+            {
+                if (holder.holdedChips.Count != 0)
+                {
+                    finishGame = false;
+                    continue;
+                }
+
+                finishGame = true;
+            }
+
+            if (finishGame)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            
         }
 
         public IEnumerator WinReward()

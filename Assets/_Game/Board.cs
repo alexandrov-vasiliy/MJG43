@@ -44,6 +44,10 @@ public class Board : MonoBehaviour
        
         foreach (var playerCard in playerCards)
         {
+            if (playerCard == null)
+            {
+                return;
+            }
             Destroy(playerCard.gameObject);
         }
 

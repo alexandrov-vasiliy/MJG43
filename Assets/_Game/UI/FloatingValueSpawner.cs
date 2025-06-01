@@ -112,6 +112,10 @@ namespace _Game
             while (elapsed < fadeDuration)
             {
                 float t = elapsed / fadeDuration;
+                if (cg != null)
+                {
+                    yield break;
+                }
                 cg.alpha = 1f - t;
                 elapsed += Time.deltaTime;
                 yield return null;
