@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace _Game
@@ -21,6 +23,7 @@ namespace _Game
         public CoreStatus status;
         public int playerWins = 0;
         public int dealerWins = 0;
+        [SerializeField] private TMP_Text roundText;
         
 
         public int round = 0;
@@ -120,6 +123,7 @@ namespace _Game
             
             G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcMain);
             round++;
+            roundText.text = round.ToString();
             OnRoundStart?.Invoke(round);
             yield return PlayerDraw();
             yield return EnemyDraw();

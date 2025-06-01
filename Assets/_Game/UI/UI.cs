@@ -74,29 +74,29 @@ namespace _Game
         {
             if(tutorialComplete) yield break;
 
-            Say("Добро пожаловать! У каждого из нас в руке по 4 карты.");
+            Say("Welcome! Each of us has 4 cards in hand.");
             yield return new WaitForSeconds(tutorialTextDelay);
-            Say("Перед началом раунда ты ставишь фишки на кон.");
+            Say("Before the round starts, you place your chips in the pot.");
             yield return new WaitUntil(() => tutorialStep > 0);
-            Say(" Мы по очереди играем по одной карте на стол. В слепую, ты не видишь мои карты а я не вижу твои.");
+            Say("We take turns playing one card at a time, face down. You can’t see my cards, and I can’t see yours.");
             yield return new WaitForSeconds(tutorialTextDelay + 1f);
-            Say("Выбери карту и сыграй.");
+            Say("Pick a card and play it.");
             yield return new WaitUntil(() => tutorialStep > 1);
-            Say("После того как ты разыгрываешь карту ход переходит ко мне.");
+            Say("After you play your card, it’s my turn.");
             yield return new WaitForSeconds(tutorialTextDelay);
-            Say("Вместо того чтобы играть карту, ты можешь нажать на колокольчик — и вскрыть все карты на столе.");
+            Say("Instead of playing, you can hit the bell — and reveal all cards on the table.");
             yield return new WaitForSeconds(tutorialTextDelay + 2f);
-            Say("Если при вскрытии сумма карт на столе _больше 21_ — тот, кто нажал на колокольчик, побеждает.  ");
+            Say("If the total is over 21 when revealed, the one who hit the bell wins.");
             yield return new WaitForSeconds(tutorialTextDelay + 2f);
-            Say("Если сумма _21 или меньше_ — он проигрывает.");
+            Say("If the total is 21 or less, they lose.");
             yield return new WaitForSeconds(tutorialTextDelay + 1f);
 
-            Say(" Если никто не нажимает на колокольчик, карты вскрывает тот, у кого раньше всех закончатся карты.  ");
+            Say("If no one rings the bell, the cards are revealed when one player runs out of cards.");
             yield return new WaitForSeconds(tutorialTextDelay + 2f);
 
-            Say("Так что долго тянуть не получится — следи за руками.");
+            Say("So you can't stall too long — keep an eye on the hands.");
             yield return new WaitUntil(() => tutorialStep > 2);
-            Say(" После вскрытия раунд завершается. Мы добираем карты, чтобы снова было по 4, и следующий раунд начинает другой игрок.");
+            Say("After revealing, the round ends. We draw back to 4 cards, and the next round starts with the other player.");
 
             tutorialComplete = true;
         }
