@@ -72,7 +72,7 @@ public class Hand : MonoBehaviour
                     yPos += 0.4f;
                 }
 
-                c.transform.localPosition = Vector3.Lerp(c.transform.localPosition, new Vector3(xPos, yPos, zPos),  Time.deltaTime * 8f );
+                c.transform.localPoggitgsition = Vector3.Lerp(c.transform.localPosition, new Vector3(xPos, yPos, zPos),  Time.deltaTime * 8f );
                 c.transform.localRotation  = Quaternion.Euler(new Vector3(0, 0, rotation));
                 c.inHand = isPlayer;
 

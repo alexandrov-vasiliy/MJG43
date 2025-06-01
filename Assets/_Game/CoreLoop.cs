@@ -32,14 +32,6 @@ namespace _Game
             G.coreLoop = this;
         }
 
-        private void Update()
-        {
-            G.ui.debug.text = $" round: {round}";
-            G.ui.debug.text += $"\nplayer wins: {playerWins}";
-            G.ui.debug.text += $"\ndealer wins: {dealerWins}";
-            
-        }
-
         public IEnumerator PlayerDraw()
         {
            yield return G.playerHand.Draw();
