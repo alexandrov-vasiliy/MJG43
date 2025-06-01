@@ -27,5 +27,6 @@ namespace _Game
 
         public static CameraSwitcher cameraSwitcher;
 
+        public static Feel feel;
     }
 }

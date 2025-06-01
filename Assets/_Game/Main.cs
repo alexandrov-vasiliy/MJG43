@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Game.Deck;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Game
 {
@@ -14,7 +15,7 @@ namespace _Game
 
         public DeckShuffler deckShuffler;
 
-        public TMP_Text scoreText;
+        [FormerlySerializedAs("scoreText")] public TMP_Text finalResultTmp;
         private void Awake()
         {
             G.brush = _brush;
@@ -31,6 +32,7 @@ namespace _Game
 
         private IEnumerator StartGame()
         {
+            StartCoroutine(G.ui.Tutorial());
             G.deck.cardPrefabs = new List<GameObject>(deckShuffler.defaultDeck.cardPrefabs);
             GiveStartChips();
             G.deck.GenerateDeck();

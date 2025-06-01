@@ -21,6 +21,7 @@ public class Board : MonoBehaviour
 
     public void PlayCard(Card card)
     {
+        G.feel.PlayCardPlace();
         card.inHand = false;
         card.isFaceUp = false;
         var place = playerCardsPlace;
@@ -75,12 +76,13 @@ public class Board : MonoBehaviour
         foreach (var playerCard in playerCards)
         {
             playerCard.isFaceUp = true;
+            G.feel.PlayCardFlip();
             playerCard.transform.DOLocalRotate(new Vector3(-90, 0, 0), 0.2f);
             yield return new WaitForSeconds(0.2f);
             G.ui.floatingValueSpawner.SpawnFloatingValue(playerCard.transform, playerCard.GetCardValue());
         }
-        G.main.scoreText.text = value.ToString();
-        G.main.scoreText.color = (value >= 21) ? Color.green : Color.red;
+        G.main.finalResultTmp.text = $"Result: {value}";
+        G.main.finalResultTmp.color = (value >= 21) ? Color.green : Color.red;
         yield return new WaitForSeconds(2f);
 
     }

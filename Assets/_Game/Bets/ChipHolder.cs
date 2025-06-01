@@ -36,6 +36,7 @@ namespace _Game.Bets
         
         public void GenerateChips(int count)
         {
+            G.feel.PlayChiGives();
             for (int i = 0; i < count; i++)
             {
                 
@@ -87,6 +88,8 @@ namespace _Game.Bets
             holdedChips.Remove(last);
             another.PickChip(last);
             last.outline.OutlineColor = Color.white;
+            
+            G.feel.PlayChipMove();
             return true;
         }
 

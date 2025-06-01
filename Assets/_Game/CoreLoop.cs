@@ -138,6 +138,7 @@ namespace _Game
 
         public IEnumerator OpenCards()
         {   
+            G.feel.PlayBell();
             G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcFront);
             yield return new WaitForSeconds(0.7f);
             yield return G.board.RevealCards();
@@ -151,7 +152,7 @@ namespace _Game
         {
             yield return new WaitForSeconds(2f);
             G.board.ClearBoard();
-            G.main.scoreText.text = "";
+            G.main.finalResultTmp.text = "";
 
             yield return StartRound();
         }
@@ -168,7 +169,7 @@ namespace _Game
             
             float value = G.board.CalculateValue(G.board.playerCards);
             yield return CalculateWinner(value);
-            G.main.scoreText.text = value.ToString();
+            G.main.finalResultTmp.text = value.ToString();
             isPlayerTurn = false;
             yield return FinishRound();
         }

@@ -23,7 +23,10 @@ namespace _Game.Bell
         private void OnMouseDown()
         {
             if(!canRing) return;
-
+            if (G.ui.tutorialStep == 2)
+            {
+                G.ui.tutorialStep++;
+            }
            StartCoroutine( G.coreLoop.OpenCards());
         }
     }

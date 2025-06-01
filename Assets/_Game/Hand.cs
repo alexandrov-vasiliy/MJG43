@@ -24,44 +24,49 @@ public class Hand : MonoBehaviour
 
     public void PickCard(Card card)
     {
+        G.feel.PlayCardDraw();
         if (isFull)
         {
             return;
         }
+
         cards.Add(card);
         card.transform.SetParent(transform);
-        PlaceCard(card);
+        UpdatePlaceAllCards();
     }
-    
+
     public void RemoveCard(Card card)
     {
+        card.inHand = false;
         cards.Remove(card);
+        UpdatePlaceAllCards();
     }
 
     private void PlaceCard(Card card)
     {
-        var position = transform.position;
         float spacingX = PLACEMENT_X_RANGE / cards.Count;
         float leftAnchorX = -1.9f;
-        
+
         foreach (Card c in cards)
         {
             if (c != null)
             {
-
                 int index = cards.IndexOf(c);
                 float xPos = leftAnchorX + (spacingX * index);
-                
+
                 float zPos = index * ZSpace;
                 float normalizedX = Mathf.Abs(xPos - leftAnchorX) / PLACEMENT_X_RANGE;
                 normalizedX = (normalizedX * 2f) - 1f;
 
                 float rotation = normalizedX * -11f;
                 float yPos = 1.1f + (0.1f * -Mathf.Abs(normalizedX));
-                
+
                 c.transform.DOLocalRotate(new Vector3(0, 0, rotation), 0.2f);
-                c.transform.DOLocalMove(new Vector3(xPos, yPos,  zPos), 0.2f).OnComplete(() => c.CardInHand());
-                c.inHand = isPlayer;
+                c.transform.DOLocalMove(new Vector3(xPos, yPos, zPos), 0.2f).OnComplete(() =>
+                {
+                    c.CardInHand();
+                    c.inHand = isPlayer;
+                });
             }
         }
 
@@ -71,11 +76,18 @@ public class Hand : MonoBehaviour
     public IEnumerator Draw()
     {
         int needToDraw = maxAmount - cards.Count;
-        for (int i = 0; i <  needToDraw; i++)
+        for (int i = 0; i < needToDraw; i++)
         {
             yield return new WaitForSeconds(0.4f);
             this.PickCard(G.deck.DrawCard());
         }
     }
-    
+
+    public void UpdatePlaceAllCards()
+    {
+        foreach (var card in cards)
+        {
+            PlaceCard(card);
+        }
+    }
 }

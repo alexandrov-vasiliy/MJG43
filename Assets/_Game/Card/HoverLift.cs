@@ -45,6 +45,9 @@ public class HoverLift : MonoBehaviour
         
         if (_isHovered) return;
         _isHovered = true;
+        
+        G.feel.PlayCardHover();
+        
         CustomCursor.Instance.SetCursor(CustomCursor.CursorType.Interactable);
 
         // Останавливаем все текущие твины на этом объекте, чтобы не было конфликтов

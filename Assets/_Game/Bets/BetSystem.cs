@@ -116,8 +116,14 @@ namespace _Game.Bets
             
             G.cameraSwitcher.SetCamera(G.cameraSwitcher.vcBets);
             yield return new WaitUntil(() => isBetConfirm);
+            
             isBetConfirm = false;
             isBettingStage = false;
+
+            if (G.ui.tutorialStep == 0)
+            {
+                G.ui.tutorialStep++;
+            }
             
             HighilteHolders(playerChipHolders, false);
             HighilteHolders(dealerChipHolders, false);

@@ -25,6 +25,8 @@ namespace _Game.Card
         public bool inHand = false;
         //public bool isOnBoard = false;
         public bool isFaceUp = false;
+
+        private Transform transformInHand;
         
         
         public void InitInHand()
@@ -55,6 +57,10 @@ namespace _Game.Card
             {
                 G.playerHand.RemoveCard(this);
                 G.board.PlayCard(this);
+                if (G.ui.tutorialStep == 1)
+                {
+                    G.ui.tutorialStep++;
+                }
                 G.coreLoop.NextTurn();
             }
         }
